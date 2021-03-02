@@ -15,20 +15,19 @@ import com.digua.kotlinapp.utils.LoginUtil
  */
 class LoginPresenter constructor(loginView: LoginContract.LoginView) : LoginContract.LoginPresenter {
 
-
-
     var mLoginView: LoginContract.LoginView? = null
 
     init {
         mLoginView = loginView;
-        LoginUtil.e("TAG","init初始化")
+        LoginUtil.e("LoginPresenter","init初始化")
     }
 //    constructor(loginView: LoginContract.LoginView) : this() {
 //        mLoginView = loginView;
 //    }
 
     override fun login(loginParam: LoginParam) {
-        TODO("登录处理")
+        LoginUtil.e("LoginPresenter","login-")
+        //登录处理
         mLoginView?.setLoginResult(LoginResult())
     }
 

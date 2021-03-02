@@ -3,12 +3,16 @@ package com.digua.kotlinapp.login
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.widget.Toast
 import com.digua.kotlinapp.R
 import com.digua.kotlinapp.base.BaseActivity
+import com.digua.kotlinapp.databinding.ActivityLoginBinding
+import com.digua.kotlinapp.login.bean.LoginParam
 import com.digua.kotlinapp.login.bean.LoginResult
 import com.digua.kotlinapp.login.presenter.LoginPresenter
 import com.digua.kotlinapp.login.presenter.contract.LoginContract
+import com.digua.kotlinapp.utils.LoginUtil
 
 /**
  *登录模块
@@ -23,26 +27,45 @@ import com.digua.kotlinapp.login.presenter.contract.LoginContract
  */
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+    private val TAG:String = "LoginActivity"
+
+    private var mBinding: ActivityLoginBinding? = null;
+
+
+    override fun getLayoutView(): View {
+        mBinding = ActivityLoginBinding.inflate(layoutInflater)
+        return mBinding!!.root
     }
 
     override fun initView() {
-        TODO("Not yet implemented")
+
     }
 
     override fun initPresenter() {
+        LoginUtil.e(TAG,"initPresenter-Before")
+        super.addListener()
+        LoginUtil.e(TAG,"initPresenter-after")
         mPresenter = LoginPresenter(this);
     }
 
+    override fun addListener() {
+        super.addListener()
+        LoginUtil.e(TAG,"addListener-Login")
+        mBinding?.btnLogin?.setOnClickListener {
+            LoginUtil.e(TAG,"addListener-click-Login")
+            mPresenter?.login(LoginParam())
+        }
+
+    }
+
     override fun initData() {
-        TODO("Not yet implemented")
+
     }
 
     override fun setLoginResult(loginresult: LoginResult) {
-        TODO("Not yet implemented")
         //登录结果处理
+        LoginUtil.e(TAG,"setLoginResult-登录成功")
+        Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show()
     }
 
     override fun showMessage(message: String?) {
@@ -51,5 +74,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
             Toast.makeText(this, message, Toast.LENGTH_SHORT)
         }
     }
+
+
 
 }

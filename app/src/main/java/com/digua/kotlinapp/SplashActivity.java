@@ -6,28 +6,25 @@ import android.view.View;
 
 import com.digua.kotlinapp.base.BaseActivity;
 import com.digua.kotlinapp.databinding.ActivitySplashBinding;
+import com.digua.kotlinapp.login.LoginActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 public class SplashActivity extends BaseActivity {
 
     private ActivitySplashBinding mBinding;
 
+
+    @NotNull
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected View getLayoutView() {
         mBinding = ActivitySplashBinding.inflate(getLayoutInflater());
-        setContentView(mBinding.getRoot());
+        return mBinding.getRoot();
     }
 
     @Override
     protected void initView() {
 
-        mBinding.btnGoMian.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -43,10 +40,19 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void addListener() {
         super.addListener();
+        mBinding.btnGoMian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void showLoading() {
         super.showLoading();
     }
+
+
 }

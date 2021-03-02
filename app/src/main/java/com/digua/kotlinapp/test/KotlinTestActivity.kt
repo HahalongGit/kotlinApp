@@ -1,10 +1,7 @@
 package com.digua.kotlinapp.test
 
-import android.app.Activity
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.digua.kotlinapp.R
 import com.digua.kotlinapp.databinding.ActivityKotlinTestBinding
 
 class KotlinTestActivity : AppCompatActivity() {
