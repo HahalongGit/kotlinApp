@@ -7,7 +7,9 @@ import com.digua.kotlinapp.utils.LoginUtil
 
 abstract class BaseActivity<T :BasePresenter?> : AppCompatActivity(), BaseView {
 
-    private val TAG:String = "BaseActivity";
+    companion object{
+        private const val TAG:String = "BaseActivity";
+    }
 
     protected var mPresenter:T? =null;
 
