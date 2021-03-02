@@ -15,15 +15,11 @@ import com.digua.kotlinapp.utils.LoginUtil
  */
 class LoginPresenter constructor(loginView: LoginContract.LoginView) : LoginContract.LoginPresenter {
 
-    var mLoginView: LoginContract.LoginView? = null
+    var  mLoginView: LoginContract.LoginView = loginView
 
     init {
-        mLoginView = loginView;
         LoginUtil.e("LoginPresenter","init初始化")
     }
-//    constructor(loginView: LoginContract.LoginView) : this() {
-//        mLoginView = loginView;
-//    }
 
     override fun login(loginParam: LoginParam) {
         LoginUtil.e("LoginPresenter","login-")
@@ -32,7 +28,8 @@ class LoginPresenter constructor(loginView: LoginContract.LoginView) : LoginCont
     }
 
     override fun onDestroy() {
-        mLoginView = null
+//        mLoginView = null
+        //如何释放view对象
     }
 
 
