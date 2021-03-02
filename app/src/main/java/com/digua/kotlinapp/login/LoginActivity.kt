@@ -27,14 +27,17 @@ import com.digua.kotlinapp.utils.LoginUtil
  */
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
 
-    private val TAG:String = "LoginActivity"
+    companion object{//定义伴随对象
+        private const val TAG:String = "LoginActivity"
+    }
 
-    private var mBinding: ActivityLoginBinding? = null;
-
+    private lateinit var mBinding: ActivityLoginBinding ;
+    //lateInit 延迟初始化的时机,这样不用再初始化时赋值null，
+    // 未初始化之前访问会抛出异常UninitializedPropertyAccessException
 
     override fun getLayoutView(): View {
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
-        return mBinding!!.root
+        return mBinding?.root
     }
 
     override fun initView() {
