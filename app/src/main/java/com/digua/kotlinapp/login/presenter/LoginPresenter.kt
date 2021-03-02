@@ -13,18 +13,26 @@ import com.digua.kotlinapp.utils.LoginUtil
  * @author RunningDigua
  * @date 2021/3/2
  */
-class LoginPresenter constructor(loginView: LoginContract.LoginView) : LoginContract.LoginPresenter {
+class LoginPresenter constructor(loginView: LoginContract.LoginView) :
+    LoginContract.LoginPresenter {
 
-    var  mLoginView: LoginContract.LoginView = loginView
+    private var mLoginView: LoginContract.LoginView = loginView
 
     init {
-        LoginUtil.e("LoginPresenter","init初始化")
+        LoginUtil.e("LoginPresenter", "init初始化")
     }
 
     override fun login(loginParam: LoginParam) {
-        LoginUtil.e("LoginPresenter","login-")
-        //登录处理
-        mLoginView?.setLoginResult(LoginResult())
+        var isSuccess: Boolean = true
+        mLoginView?.showLoading()
+        if (isSuccess) {
+            LoginUtil.e("LoginPresenter", "login-")
+            //登录处理
+            mLoginView?.setLoginResult(LoginResult())
+        } else {
+            mLoginView?.showMessage("登录失败~")
+        }
+        mLoginView?.hideLoading()
     }
 
     override fun onDestroy() {
