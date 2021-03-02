@@ -54,7 +54,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
     override fun addListener() {
         super.addListener()
         LoginUtil.e(TAG,"addListener-Login")
-        mBinding?.btnLogin?.setOnClickListener {
+        mBinding.btnLogin?.setOnClickListener {
             LoginUtil.e(TAG,"addListener-click-Login")
             mPresenter?.login(LoginParam())
         }
