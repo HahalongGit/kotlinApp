@@ -13,6 +13,7 @@ import com.digua.kotlinapp.login.bean.LoginResult
 import com.digua.kotlinapp.login.presenter.LoginPresenter
 import com.digua.kotlinapp.login.presenter.contract.LoginContract
 import com.digua.kotlinapp.utils.LoginUtil
+import com.digua.kotlinapp.utils.SharePreferencesTools
 
 /**
  *登录模块
@@ -27,13 +28,16 @@ import com.digua.kotlinapp.utils.LoginUtil
  */
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
 
-    companion object{//定义伴随对象
-        private const val TAG:String = "LoginActivity"
+    companion object {
+        //定义伴随对象
+        private const val TAG: String = "LoginActivity"
     }
 
-    private lateinit var mBinding: ActivityLoginBinding ;
+    private lateinit var mBinding: ActivityLoginBinding;
     //lateInit 延迟初始化的时机,这样不用再初始化时赋值null，
     // 未初始化之前访问会抛出异常UninitializedPropertyAccessException
+
+    private lateinit var mSharedPreferences: SharePreferencesTools
 
     override fun getLayoutView(): View {
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
@@ -41,22 +45,25 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
     }
 
     override fun initView() {
+        LoginUtil.e(TAG, "initView-")
 
+        mSharedPreferences = SharePreferencesTools(this)
+        mSharedPreferences.putUserId("digua_123456789")
     }
 
     override fun initPresenter() {
-        LoginUtil.e(TAG,"initPresenter-Before")
+        LoginUtil.e(TAG, "initPresenter-Before")
         super.addListener()
-        LoginUtil.e(TAG,"initPresenter-after")
+        LoginUtil.e(TAG, "initPresenter-after")
         mPresenter = LoginPresenter(this);
     }
 
     override fun addListener() {
         super.addListener()
-        LoginUtil.e(TAG,"addListener-Login")
         mBinding.btnLogin?.setOnClickListener {
-            LoginUtil.e(TAG,"addListener-click-Login")
-            mPresenter?.login(LoginParam())
+            var loginParam = LoginParam()
+            loginParam.password = "12331"
+            mPresenter?.login(loginParam)
         }
 
     }
@@ -67,15 +74,9 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
 
     override fun setLoginResult(loginresult: LoginResult) {
         //登录结果处理
-        LoginUtil.e(TAG,"setLoginResult-登录成功")
         Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showMessage(message: String?) {
-        super.showMessage(message)
-        if (TextUtils.isEmpty(message)) {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT)
-        }
+        var userId = mSharedPreferences.getUserId()
+        LoginUtil.e(TAG, "setLoginResult-userId:$userId")
     }
 
 
