@@ -128,4 +128,23 @@ class Main {
     }
 
 
+    //委托实现
+    //委托实现的作用是什么？
+
+    interface Base {
+        fun print()
+    }
+    class BaseImpl(val x: Int) : Base {
+        override fun print() { print(x) }
+    }
+    class Derived(base: Base) : Base by base{
+        override fun print() {
+            //可以重写其方法
+        }
+    }
+
+    fun main1() {
+        val b = BaseImpl(10)
+        Derived(b).print()
+    }
 }
