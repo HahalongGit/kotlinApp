@@ -80,4 +80,52 @@ class Main {
             index++
         }
     }
+
+    /**
+     * 1.out 测试申明处变化
+     */
+    fun testOut(strs:Student<String>){
+        val objects:Student<Any> = strs //此处把Student<String>的strs 赋值给Studnet<Any>，
+        var ss:Any =  objects.nextStudent() //此处返回的结果不能被使用
+        //因为提前申明了Student泛型的out属性，因此代码不会报错
+
+    }
+
+    //2.型变注释in，它使得一个类型参数逆变，只可被消费而不可以被生产。逆变类型的一个很好的例子是Comparable：
+    interface Comparable<in T>{ //这里可以理解 in的意思是作为参数传递进入
+        operator fun compareTo(other:T):Int
+    }
+
+    fun testInDemo(x:Comparable<Number>){
+        x.compareTo(1.0)//1.0是double类型，它是Number的子类型
+        //因此，我们可以讲x赋值给类型Comparable<Double>的变量
+        val y:Comparable<Double> = x // OK 因为Double是Number的子类
+    }
+
+    fun testOuter(){
+        val outer1 = Outer.MyInnerClass().foo() //访问嵌套类，MyInnerClass相当于java的静态内部类
+        val innerDemo = Outer().Inner().getUserInfo()
+        //内部类需要外部类的对象调用创建对象，内部类持有外部类的一个引用
+
+        //kotlin中的匿名内部类
+        val outer = Outer()
+        outer.setConClickListener(object:Outer.OnClickListener{
+            override fun onClick() {
+                //java 中的匿名内部类采用 object申明
+            }
+
+            override fun onLongClick(position: Int) {
+                //java 中的匿名内部类采用 object申明
+            }
+        })
+
+    }
+
+
+    fun testAnonymousClass(){
+        val anonymousClass:AnonymousClass = AnonymousClass();
+        anonymousClass.publicFoo()
+    }
+
+
 }
