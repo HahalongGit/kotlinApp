@@ -49,10 +49,5 @@ public class SplashActivity extends BaseActivity {
         });
     }
 
-    @Override
-    public void showLoading() {
-        super.showLoading();
-    }
-
 
 }
