@@ -1,5 +1,9 @@
 package com.digua.kotlinapp.test
 
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.produce
+import kotlin.system.measureTimeMillis
+
 /**
  * 函数参数和lambda表达式
  * 参考https://www.kotlincn.net/docs/reference/lambdas.html
@@ -26,6 +30,7 @@ class FunctionParam {
         fun(x: Int, y: Int) {//匿名函数，没有函数名，函数体可以是一个代码块或者一个表达式
             x + y
         }
+
         val arraylist = ArrayList<String>(listOf("234"))
         //kotlin 中的ArrayList在代码中查看是对java的ArrayList起了一个别名
         //集合可以通过toList、toMutableList等方法浅复制一个副本，对原集合原色的修改都会反映在所有副本操作中。
@@ -38,6 +43,61 @@ class FunctionParam {
         //区间的定义和转换
         val numbers = (1..100)
         val listNumbers = numbers.toList()
+
+        listNumbers.sum()
+        listNumbers.average()
+        listNumbers.max()
+        listNumbers.min()
+//        listNumbers.sumBy {  }
+
+        var listSring = mutableListOf("12312", "234234");
+        arraylist.add("")
+        listSring.add("")
+        listSring.max()
+        listSring.min()
+
+
+        val mynumbers = mutableListOf("one", "two", "three", "four")
+        mynumbers.add("five")   // 这是可以的
+
+
+    }
+
+
+    //有关协诚的使用
+
+     suspend fun doSomethingUsefulOne(): Int {
+        delay(1000L) // 假设我们在这里做了一些有用的事
+        return 13
+    }
+
+    fun testCoroutines() {
+        val job = GlobalScope.launch {
+            try {
+                val time = measureTimeMillis {
+                    val one = async(start = CoroutineStart.LAZY) {
+                       doSomethingUsefulOne()
+                    }
+                    one.start()
+                }
+                var number:Int = 0
+                repeat(100_000_0) {
+                    number+=1
+                    println("I'm waiting for 1000 times--$number")
+                    delay(1000)
+                }
+            } finally {
+                withTimeout(1000) {
+                    println("withTimeour")
+                }
+            }
+        }
+    }
+
+    //定义协成类的 扩展方法
+    fun CoroutineScope.produceNumbers() = produce<Int> {
+        var x = 1
+        while (true) send(x++) // 在流中开始从 1 生产无穷多个整数
     }
 
 }
