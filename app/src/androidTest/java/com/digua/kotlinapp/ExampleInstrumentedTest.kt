@@ -2,6 +2,7 @@ package com.digua.kotlinapp
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.digua.kotlinapp.login.bean.LoginParam
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,4 +22,11 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.digua.kotlinapp", appContext.packageName)
     }
+
+    @Test
+    fun testFunctionParam(){
+        println("ExampleInstrumentedTest")
+        val loginParam:LoginParam = LoginParam();
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.digua.kotlinapp.test
 
+import com.digua.kotlinapp.login.bean.LoginParam
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.produce
+import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
 /**
@@ -66,7 +68,7 @@ class FunctionParam {
 
     //有关协诚的使用
 
-     suspend fun doSomethingUsefulOne(): Int {
+    suspend fun doSomethingUsefulOne(): Int {
         delay(1000L) // 假设我们在这里做了一些有用的事
         return 13
     }
@@ -76,13 +78,13 @@ class FunctionParam {
             try {
                 val time = measureTimeMillis {
                     val one = async(start = CoroutineStart.LAZY) {
-                       doSomethingUsefulOne()
+                        doSomethingUsefulOne()
                     }
                     one.start()
                 }
-                var number:Int = 0
+                var number: Int = 0
                 repeat(100_000_0) {
-                    number+=1
+                    number += 1
                     println("I'm waiting for 1000 times--$number")
                     delay(1000)
                 }
@@ -98,6 +100,65 @@ class FunctionParam {
     fun CoroutineScope.produceNumbers() = produce<Int> {
         var x = 1
         while (true) send(x++) // 在流中开始从 1 生产无穷多个整数
+    }
+
+
+    fun jUnitTest1() {
+        println("jUnitTest-123")
+//        val (name,age) = Student()
+        val pair = Pair("!23", "1231")
+
+        //获取类的KClass 类型（java中的Class类型）
+        val loginParam = LoginParam::class
+
+        val login = LoginParam()
+        // 普通代码使用apply 操作对象属性
+        login.apply {
+            password  = "12345678"
+            userName = "longlong.liu"
+            print(loginParam)
+        }
+        //使用also it作为参数处理，代码更清晰一些
+        login.also {
+            it.password = "123456"
+            it.token = "azs3d4xkdsf213hz12431ds213sd"
+        }
+
+        login.run {
+            //对象作为this传递，直接使用对象的参数
+        }
+        login.let {
+
+        }
+
+        // 代码块的关键子let、run、with、apply、also的使用：
+        //apply 和alse返回的是上下文对象本身，因此，他们可以作为辅助步骤包含在调用链中，可以
+        //继续在同一个对象上进行链式函数的调用
+        val numberList = mutableListOf<Double>()
+        numberList.apply { print(loginParam) }
+            .apply {
+                //apply默认包含this对象本身 相当于  this.add(12.23)
+                //alse 包含一个it参数代表本身 如：it.add(122.2)
+                add(12.23)
+                add(1231.2)
+            }.also { print("sorting the list $it") }
+            .sort()
+
+
+        //also 用在返回上下文对象的返回语句中
+        getRandomInt()
+
+        val numbers = mutableListOf("one", "two", "three", "four", "five")
+        numbers.map { it.length }.filter { it > 3 }.let{ print(it)}
+        numbers.map { it.length }.filter { it > 3 }.let(::print)
+        //代码块仅仅以it为参数可以使用“::”的方式直接输出
+
+    }
+
+    private fun getRandomInt(): Int {
+        return Random.nextInt(100).also {
+            print("getRandomInt() generated value $it")
+        }
     }
 
 }

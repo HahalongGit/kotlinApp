@@ -147,4 +147,11 @@ class Main {
         val b = BaseImpl(10)
         Derived(b).print()
     }
+
+    //Kotlin中线程安全的数据结构
+    //普通数据类型和字段在多线程的时候会出现数据错误，比如一个自增的Int。
+    //在简单的计数器场景中可以使用有incrementAndGet原子操作的AtomicInteger
+    //val counter = AtomicInter()
+    //多线程内部：counter.incrementAndGet()
+
 }
