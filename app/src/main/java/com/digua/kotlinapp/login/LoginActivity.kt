@@ -1,11 +1,9 @@
 package com.digua.kotlinapp.login
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.text.TextUtils
+import android.content.Intent
 import android.view.View
 import android.widget.Toast
-import com.digua.kotlinapp.R
+import com.digua.kotlinapp.main.MainActivity
 import com.digua.kotlinapp.base.BaseActivity
 import com.digua.kotlinapp.databinding.ActivityLoginBinding
 import com.digua.kotlinapp.login.bean.LoginParam
@@ -77,8 +75,11 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
         Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show()
         var userId = mSharedPreferences.getUserId()
         LoginUtil.e(TAG, "setLoginResult-userId:$userId")
-    }
 
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+
+    }
 
 
 }
