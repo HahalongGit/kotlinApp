@@ -27,6 +27,8 @@ interface MainContract {
 
 //        fun queryOtherDataKotlin(type: String?, key: String?)
 
+        fun testSuspend();
+
     }
 
 
