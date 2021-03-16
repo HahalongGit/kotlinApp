@@ -1,5 +1,6 @@
 package com.digua.kotlinapp.main.presenter
 
+import android.widget.Toast
 import com.digua.kotlinapp.base.BaseResponse
 import com.digua.kotlinapp.main.api.MainApi
 import com.digua.kotlinapp.main.bean.ResultBean
@@ -45,7 +46,8 @@ class MainPresenter constructor(veiw: MainContract.MainView) : MainContract.Main
     override fun queryData(param: String) {
         print(TAG + param)
         println(TAG + "queryData-currentThread1:" + Thread.currentThread().name)  //Thread --main
-        mMainApi.queryData()?.enqueue(object : Callback<BaseResponse<ResultBean>> {
+        mMainApi.queryData()
+            ?.enqueue(object : Callback<BaseResponse<ResultBean>> {
             override fun onResponse(
                 call: Call<BaseResponse<ResultBean>>,
                 response: Response<BaseResponse<ResultBean>>
@@ -107,17 +109,20 @@ class MainPresenter constructor(veiw: MainContract.MainView) : MainContract.Main
     override fun queryDataWithKotlin(param: String) {
         println(TAG+"queryDataWithKotlin-currentThread1:"+Thread.currentThread().name) //Thread-main
         println(TAG+"queryDataWithKotlin--start-")
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(Dispatchers.IO) {//Dispatchers.IO指定切换到IO线程
+            // suspend修饰的挂起函数在执行时会自动切换线程，要切换到哪里需要我们指定,指定为IO线程后获取线程名
+            // 输出为：queryDataWithKotlin-currentThread2:DefaultDispatcher-worker-1
             try {
                 var result:BaseResponse<ResultBean> = mMainApi.queryDataWithKotlin()
                 println(TAG+"queryDataWithKotlin-currentThread2:"+Thread.currentThread().name)// Thread-main
                 println(TAG+"queryDataWithKotlin-success--code:"+result.code)
                 println(TAG+"queryDataWithKotlin-success-data:"+Gson().toJson(result.data))
+                result.data?.let { mMainView?.setResult(it) } //这里设置的时候线程没有切换回来还是 DefaultDispatcher-worker-1
             }catch (e:Exception){
                 println(TAG+"queryDataWithKotlin-error:"+e.toString())
             }
         }
-        println(TAG+"queryDataWithKotlin--end-")
+        println(TAG+"queryDataWithKotlin--end-"+Thread.currentThread()) //end-Thread[main,5,main]
     }
 
     /**
@@ -140,7 +145,7 @@ class MainPresenter constructor(veiw: MainContract.MainView) : MainContract.Main
 
         println(TAG+"testSuspend-currentThread1:"+Thread.currentThread().name) //currentThread1:main
         runBlocking {
-            delay(10000) //runBlocking delay 会阻塞主线程
+//            delay(10000) //runBlocking delay 会阻塞主线程
             println(TAG+"testSuspend-currentThread2:"+Thread.currentThread().name) //currentThread2:main
             GlobalScope.launch {
                 println(TAG+"testSuspend-currentThread3:"+Thread.currentThread().name) //DefaultDispatcher-worker-2
@@ -153,7 +158,12 @@ class MainPresenter constructor(veiw: MainContract.MainView) : MainContract.Main
     /**
      * 如何定义一个 suspend函数 suspend必须运行在协程中 或者另外一个suspend函数中。
      */
-    private suspend fun suspendFunction(){
+    private suspend fun suspendFunction() {// withContext(Dispatchers.IO) 添加一个协程的线程切换
+        //suspend 修饰的挂起函数 必须运行在协程或者另外一个suspend修饰的函数中:
+        //其实所谓挂起就是这里对执行的代码进行一个线程的切换，一般只有耗时的、等待的操作我们才
+        //申明为suspend，（相当于Android中耗时操作要运行在非主线程一样）suspend本身能够切换到
+        //其他线程，同时在suspend执行完毕还能够切换回执行suspend之前的线程。
+
         //DefaultDispatcher-worker-2
         delay(3000) //添加上delay 本方法中的 suspend才生效
         println(TAG+"testSuspend-currentThread4:"+Thread.currentThread().name)
