@@ -27,6 +27,15 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.MainView,
         mBinding.btnTestSuspend.setOnClickListener(this)
         mBinding.btnOperation.setOnClickListener(this)
         mBinding.tvContextText.text = "这是Main页面"
+
+        mBinding.btnOperation.setOnClickListener {
+            when(it.id){
+                R.id.btnTestSuspend->{
+
+                }
+            }
+            //简化的写法
+            TODO("Not yet implemented") }
     }
 
     override fun initPresenter() {

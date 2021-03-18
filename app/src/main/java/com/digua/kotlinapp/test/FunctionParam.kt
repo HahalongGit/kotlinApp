@@ -161,4 +161,22 @@ class FunctionParam {
         }
     }
 
+    //匿名对象测试
+    fun foo(){
+        val addHoc = object {
+            var x:Int = 0
+            var y:Int = 0
+        }
+        println("addhoc:"+addHoc.x+","+addHoc.y)
+        //任何时候，如果我们只需要一个对象而已，而不需要特殊类型超类就可以这样写
+        DataProviderManager.registerDataProvider()
+    }
+
+    object DataProviderManager {
+        fun registerDataProvider() {
+            println("对象声明")
+        }
+
+    }
+
 }
