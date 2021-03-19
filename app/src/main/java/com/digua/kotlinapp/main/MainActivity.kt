@@ -5,7 +5,9 @@ import android.widget.Toast
 import com.digua.kotlinapp.R
 import com.digua.kotlinapp.base.BaseActivity
 import com.digua.kotlinapp.databinding.ActivityMainBinding
+import com.digua.kotlinapp.getLongestString
 import com.digua.kotlinapp.main.bean.ResultBean
+import com.digua.kotlinapp.main.bean.User
 import com.digua.kotlinapp.main.presenter.MainPresenter
 import com.digua.kotlinapp.main.presenter.contract.MainContract
 
@@ -48,6 +50,9 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.MainView,
     }
 
     override fun initData() {
+        val list = listOf("12","lili","xinyu")
+        val longest = list.getLongestString()
+        println("longest:$longest")
 
 
     }
