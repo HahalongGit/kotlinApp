@@ -9,6 +9,7 @@ import org.junit.Assert.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 import kotlin.math.log
+import kotlin.reflect.KProperty
 import kotlin.system.measureTimeMillis
 
 /**
@@ -214,5 +215,72 @@ class ExampleUnitTest {
         delay(1000L) // 假设我们在这里也做了一些有用的事
         return 29
     }
+
+    fun testFill(){
+        val array:Array<CharSequence> = arrayOf("31","","aa")
+        fill(array,"32")
+    }
+
+    private fun fill(dest: Array<in String>, value: String) {
+        dest[0] = value
+    }
+
+    // 创建接口
+    interface Base {
+        fun print()
+    }
+
+    // 实现此接口的被委托的类
+    class BaseImpl(val x: Int) : Base {
+        override fun print() {
+            print(x)
+        }
+    }
+
+    // 通过关键字 by 建立委托类
+    class Derived(base: Base) : Base by base{
+        //Derived虽然实现了Base接口，但是自己不执行，委托给传入的参数的类去实行（让代理执行）
+        //传入了一个BaseImpl
+
+        //如果这个Derived自己实现了Base的方法委托就不会生效！！！
+
+//        override fun print() {
+////            println("derived:")
+//        }
+    }
+
+    @Test
+    fun main8() {
+        val b = BaseImpl(10)
+        Derived(b).print() // 输出 10
+    }
+
+    class Example {
+        var p: String by Delegate()
+    }
+    class Delegate {
+        operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
+            // thisRef 值得是包含委托属性的类对象，参数二表示属性本身
+            return "$thisRef, 这里委托了 ${property.name} 属性"
+        }
+
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
+            // 对于setValue方法，参数三是 要set 的值
+            println("$thisRef 的 ${property.name} 属性赋值为 $value")
+        }
+    }
+
+    @Test
+    fun test9(){
+        val e = Example()
+        println(e)
+        println("-----------------------------------------")
+        println(e.p)     // 访问该属性，调用 getValue() 函数
+
+        e.p = "Runoob"   // 调用 setValue() 函数
+        println(e.p)
+    }
+
+
 
 }
