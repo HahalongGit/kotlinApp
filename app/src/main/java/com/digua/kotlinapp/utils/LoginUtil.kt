@@ -12,6 +12,9 @@ import com.digua.kotlinapp.BuildConfig
 object LoginUtil {
 
     private val isDebug = BuildConfig.DEBUG
+
+
+
     fun e(TAG: String?, message: String?) {
         if (isDebug) {
             Log.e(TAG, message!!)

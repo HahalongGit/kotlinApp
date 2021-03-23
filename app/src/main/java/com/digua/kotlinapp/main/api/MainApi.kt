@@ -26,7 +26,6 @@ interface MainApi {
     @GET("article/listproject/0/json")
     suspend fun queryDataWithKotlin1(): Call<BaseResponse<ResultBean>>
 
-
     /**
      * 采用kotlin 协程请求数据的方式
      */

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import com.digua.kotlinapp.main.MainActivity
 import com.digua.kotlinapp.base.BaseActivity
+import com.digua.kotlinapp.basemvp.BaseMvpActivity
 import com.digua.kotlinapp.databinding.ActivityLoginBinding
 import com.digua.kotlinapp.login.bean.LoginParam
 import com.digua.kotlinapp.login.bean.LoginResult
@@ -24,7 +25,7 @@ import com.digua.kotlinapp.utils.SharePreferencesTools
  *
  * https://www.yisu.com/zixun/203464.html 使用viewBinding的优势！比Kotlin插件的优势，Kotln和java都可以用
  */
-class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
+class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.LoginView {
 
     companion object {
         //定义伴随对象
@@ -49,22 +50,20 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.LoginView {
         mSharedPreferences.putUserId("digua_123456789")
     }
 
-    override fun initPresenter() {
-        LoginUtil.e(TAG, "initPresenter-Before")
-        super.addListener()
-        LoginUtil.e(TAG, "initPresenter-after")
-        mPresenter = LoginPresenter(this);
-    }
 
     override fun addListener() {
         super.addListener()
+        login()
+    }
+
+    private fun login() {
         mBinding.btnLogin?.setOnClickListener {
             var loginParam = LoginParam()
             loginParam.password = "12331"
             mPresenter?.login(loginParam)
         }
-
     }
+
 
     override fun initData() {
 

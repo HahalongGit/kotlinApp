@@ -2,6 +2,7 @@ package com.digua.kotlinapp.main.presenter.contract
 
 import com.digua.kotlinapp.base.BasePresenter
 import com.digua.kotlinapp.base.BaseView
+import com.digua.kotlinapp.base.IPresenter
 import com.digua.kotlinapp.main.bean.ResultBean
 
 /**
@@ -12,7 +13,7 @@ import com.digua.kotlinapp.main.bean.ResultBean
  */
 interface MainContract {
 
-    interface MainPresenter : BasePresenter {
+    interface MainPresenter : IPresenter<MainView> {
 
         fun queryData(param: String)
 
@@ -24,6 +25,11 @@ interface MainContract {
         fun queryDataWithKotlin(param: String)
 
         fun queryDataWithRxjava(param: String);
+
+        /**
+         * 函数式调用接口（相当于设置了一个回调）
+         */
+        fun queryDataWithKotlinFunctionParam(param: String,callkack:(result:ResultBean)->Unit)
 
 //        fun queryOtherDataKotlin(type: String?, key: String?)
 

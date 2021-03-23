@@ -28,7 +28,7 @@ public class Student extends Person<Student> {
         //clazz.getSuperclass() 获取该类的父类
         System.out.println("Superclass:"+clazz.getSuperclass());
 
-        //getGenericSuperclass()方法是获取带有泛型的父类
+        //getGenericSuperclass()方法是获取带有泛型的父类,带有泛型的父类指的就是ParameterizedType类型
         // Type是Java编程语言中所有类型的公共高级接口，它们包含原始类型，参数化类型，数组类型，类型变量和基本类型
         Type type = clazz.getGenericSuperclass();
         System.out.println("GenericSuperclass:"+type);

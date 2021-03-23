@@ -1,7 +1,6 @@
 package com.digua.kotlinapp;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 
 import com.digua.kotlinapp.base.BaseActivity;
@@ -24,11 +23,6 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
-    }
-
-    @Override
-    protected void initPresenter() {
 
     }
 

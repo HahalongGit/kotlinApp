@@ -7,13 +7,12 @@ import android.view.View
 import android.widget.Toast
 import com.digua.kotlinapp.utils.LoginUtil
 
-abstract class BaseActivity<T : BasePresenter?> : AppCompatActivity(), BaseView {
+abstract class BaseActivity: AppCompatActivity(), BaseView {
 
     companion object {
         private const val TAG: String = "BaseActivity";
     }
 
-    protected var mPresenter: T? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +20,6 @@ abstract class BaseActivity<T : BasePresenter?> : AppCompatActivity(), BaseView 
         setContentView(getLayoutView())
         initView()
         initData()
-        initPresenter()
         addListener()
     }
 
@@ -34,7 +32,7 @@ abstract class BaseActivity<T : BasePresenter?> : AppCompatActivity(), BaseView 
 
     protected abstract fun initView();
 
-    protected abstract fun initPresenter();
+
 
     protected abstract fun initData();
 
