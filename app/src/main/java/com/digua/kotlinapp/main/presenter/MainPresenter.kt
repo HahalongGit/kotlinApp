@@ -1,17 +1,19 @@
 package com.digua.kotlinapp.main.presenter
 
-import android.widget.Toast
+import com.digua.kotlinapp.base.BasePresenter
 import com.digua.kotlinapp.base.BaseResponse
 import com.digua.kotlinapp.main.api.MainApi
 import com.digua.kotlinapp.main.bean.ResultBean
 import com.digua.kotlinapp.main.presenter.contract.MainContract
 import com.google.gson.Gson
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -21,11 +23,11 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @author RunningDigua
  * @date 2021/3/15
  */
-class MainPresenter constructor(veiw: MainContract.MainView) : MainContract.MainPresenter {
-
-    private var mMainView: MainContract.MainView = veiw;
+class MainPresenter : BasePresenter<MainContract.MainView>(),MainContract.MainPresenter {
 
     private var mMainApi: MainApi
+
+    val mainScope = MainScope()
 
     companion object {
         val TAG = MainPresenter.javaClass.name + "......"
@@ -117,7 +119,7 @@ class MainPresenter constructor(veiw: MainContract.MainView) : MainContract.Main
                 println(TAG+"queryDataWithKotlin-currentThread2:"+Thread.currentThread().name)// Thread-main
                 println(TAG+"queryDataWithKotlin-success--code:"+result.code)
                 println(TAG+"queryDataWithKotlin-success-data:"+Gson().toJson(result.data))
-                result.data?.let { mMainView?.setResult(it) } //这里设置的时候线程没有切换回来还是 DefaultDispatcher-worker-1
+                result.data?.let { mView?.setResult(it) } //这里设置的时候线程没有切换回来还是 DefaultDispatcher-worker-1
             }catch (e:Exception){
                 println(TAG+"queryDataWithKotlin-error:"+e.toString())
             }
@@ -139,6 +141,36 @@ class MainPresenter constructor(veiw: MainContract.MainView) : MainContract.Main
             })
     }
 
+    override fun queryDataWithKotlinFunctionParam(param: String, callkack: (result:ResultBean) -> Unit) {
+        GlobalScope.launch(Dispatchers.IO) {//Dispatchers.IO指定切换到IO线程
+            // suspend修饰的挂起函数在执行时会自动切换线程，要切换到哪里需要我们指定,指定为IO线程后获取线程名
+            // 输出为：queryDataWithKotlin-currentThread2:DefaultDispatcher-worker-1
+            try {
+                var result:BaseResponse<ResultBean> = mMainApi.queryDataWithKotlin()
+                println(TAG+"queryDataWithKotlinFunctionParam-currentThread2:"+Thread.currentThread().name)// Thread-main
+                println(TAG+"queryDataWithKotlinFunctionParam-success--code:"+result.code)
+                println(TAG+"queryDataWithKotlinFunctionParam-success-data:"+Gson().toJson(result.data))
+
+
+                //请求成功切换到主线程 写法1
+                launch(Dispatchers.Main) {
+                    result.data?.let{
+                        callkack.invoke(it) ////函数式调用
+                    }
+                }
+
+                //请求成功后切换到主线程 写法2
+//                mainScope.launch {
+//                    result.data?.let{
+//                        callkack.invoke(it) ////函数式调用
+//                    }
+//                }
+
+            }catch (e:Exception){
+                println(TAG+"queryDataWithKotlin-error:"+e.toString())
+            }
+        }
+    }
 
 
     override fun testSuspend() {
