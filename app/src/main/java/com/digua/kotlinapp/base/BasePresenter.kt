@@ -8,9 +8,10 @@ package com.digua.kotlinapp.base
  */
 open class BasePresenter<V : BaseView> :IPresenter<V>{
 
+    //业务中view的引用
     protected var mView:V? = null;
 
-    override fun attachView(view: V) {
+    override fun attachView(view: V) {//调用attachView绑定业务页面的View
        mView = view;
     }
 
