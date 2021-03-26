@@ -45,9 +45,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version" //反射用到的库
 
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version" //百度的单元测试依赖
-    testImplementation "com.nhaarman:mockito-kotlin:1.1.0" //百度的单元测试依赖
-    testImplementation "org.amshove.kluent:kluent:1.14" //百度的单元测试依赖
+//    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version" //百度的单元测试依赖
+//    testImplementation "com.nhaarman:mockito-kotlin:1.1.0" //百度的单元测试依赖
+//    testImplementation "org.amshove.kluent:kluent:1.14" //搜的单元测试依赖
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

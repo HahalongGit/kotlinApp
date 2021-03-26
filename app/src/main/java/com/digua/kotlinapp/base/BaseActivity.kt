@@ -16,17 +16,12 @@ abstract class BaseActivity: AppCompatActivity(), BaseView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LoginUtil.e(TAG, "onCreate")
         setContentView(getLayoutView())
         initView()
         initData()
         addListener()
     }
 
-    override fun onStart() {
-        super.onStart()
-        LoginUtil.e(TAG, "onStart")
-    }
 
     protected abstract fun getLayoutView(): View
 

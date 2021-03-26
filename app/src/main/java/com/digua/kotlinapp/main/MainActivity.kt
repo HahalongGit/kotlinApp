@@ -1,5 +1,6 @@
 package com.digua.kotlinapp.main
 
+import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.digua.kotlinapp.R
@@ -7,16 +8,57 @@ import com.digua.kotlinapp.basemvp.BaseMvpActivity
 import com.digua.kotlinapp.databinding.ActivityMainBinding
 import com.digua.kotlinapp.getLongestString
 import com.digua.kotlinapp.main.bean.ResultBean
+import com.digua.kotlinapp.main.fragment.MainFragment
 import com.digua.kotlinapp.main.presenter.MainPresenter
 import com.digua.kotlinapp.main.presenter.contract.MainContract
+import com.digua.kotlinapp.utils.LoginUtil
 
 class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
     View.OnClickListener {//传递一个MainPresenter 在Base中反射创建对象，同时传递一个页面view给Presenter
 
     private lateinit var mBinding: ActivityMainBinding
 
+    private val mFragmentManager = supportFragmentManager
+
     companion object {
-        val TAG: String = MainActivity.javaClass.name + "......"
+        const val TAG: String = "MainActivity.java--"
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        LoginUtil.e(TAG,"onCreate")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        LoginUtil.e(TAG,"onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LoginUtil.e(TAG,"onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LoginUtil.e(TAG,"onPause")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        LoginUtil.e(TAG,"onRestart")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LoginUtil.e(TAG,"onStop")
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LoginUtil.e(TAG,"onDestroy")
     }
 
     override fun getLayoutView(): View {
@@ -30,15 +72,24 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
         mBinding.tvContextText.text = "这是Main页面"
 
         mBinding.btnOperation.setOnClickListener {
-            when(it.id){
+            when (it.id) {
                 R.id.btnTestSuspend -> {
-                    Toast.makeText(this,"点击了..测试suspend关键字",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "点击了..测试suspend关键字", Toast.LENGTH_SHORT).show()
                 }
             }
             //简化的写法
         }
+
+        addFragment()
+
     }
 
+    private fun addFragment() {
+        val beginTransaction = mFragmentManager.beginTransaction()
+        val mainFragment = MainFragment()
+        beginTransaction.add(R.id.fl_container, mainFragment)
+            .commit()
+    }
 
     override fun initData() {
         val list = listOf("12", "lili", "xinyu")
@@ -51,10 +102,10 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
         mPresenter?.queryDataWithKotlin("参数3")
 
         //函数式请求的方式调用
-        mPresenter?.queryDataWithKotlinFunctionParam("普通参数一个"){
+        mPresenter?.queryDataWithKotlinFunctionParam("普通参数一个") {
             println("queryDataWithKotlinFunctionParam-size--:" + it.size)
-            println("queryDataWithKotlinFunctionParam-threadName--:" +Thread.currentThread().name)
-            Toast.makeText(this,"size:"+it.size,Toast.LENGTH_SHORT).show()
+            println("queryDataWithKotlinFunctionParam-threadName--:" + Thread.currentThread().name)
+            Toast.makeText(this, "size:" + it.size, Toast.LENGTH_SHORT).show()
         }
 
 

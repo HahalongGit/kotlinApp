@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".basemvp.BaseMvpActivity"></activity>
+        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".basemvp.BaseMvpActivity" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".base.BaseActivity" />
-        <activity android:name=".test.KotlinTestActivity" />
+        <activity android:name=".base.BaseActivity" /> <!-- <activity android:name=".test.KotlinTestActivity" /> -->
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

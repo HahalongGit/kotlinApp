@@ -29,12 +29,10 @@ public abstract class BaseMvpActivity<T extends BasePresenter> extends BaseActiv
 
     //这个方法在子类的Activity被调用，所以子类 getGenericSuperclass得到就是BaseMvpActivity<T extends BasePresenter>
     protected T initPresenter(){
-        LoginUtil.INSTANCE.e(TAG,"initPresenter");
         Type genericSuperclass = getClass().getGenericSuperclass();
         ParameterizedType type = (ParameterizedType) genericSuperclass;
         Class<T> tClass = (Class<T>) type.getActualTypeArguments()[0];
         try {
-            LoginUtil.INSTANCE.e(TAG,"tClass--"+tClass.getName());
             return tClass.newInstance();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -49,4 +47,5 @@ public abstract class BaseMvpActivity<T extends BasePresenter> extends BaseActiv
         super.onDestroy();
         mPresenter.onDestroy();
     }
+
 }
