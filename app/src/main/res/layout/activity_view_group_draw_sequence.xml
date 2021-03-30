@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.digua.kotlinapp.view.MyLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.digua.kotlinapp.view.MyDrawLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#889679CC"
     tools:context=".other.ViewGroupDrawSequenceActivity">
 
     <Button
         android:text="我是一个按钮，显示在MyLinearLayout中"
         android:layout_width="match_parent"
-        android:layout_marginTop="200dp"
+        android:visibility="gone"
         android:layout_height="50dp"/>
 
-</com.digua.kotlinapp.view.MyLinearLayout>
+</com.digua.kotlinapp.view.MyDrawLayout>
