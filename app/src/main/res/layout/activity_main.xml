@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.digua.kotlinapp.view.MyLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,7 +29,13 @@
 
     <Button
         android:id="@+id/btnOperation"
-        android:text="一个按钮"
+        android:text="点击--测试UI阻塞的按钮"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnDrawSequence"
+        android:text="测试VireGroup的绘制顺序"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -38,4 +44,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</com.digua.kotlinapp.view.MyLinearLayout>
+</LinearLayout>

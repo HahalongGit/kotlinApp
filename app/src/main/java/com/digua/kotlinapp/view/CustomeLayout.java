@@ -42,16 +42,16 @@ public class CustomeLayout extends ViewGroup {
     public void draw(Canvas canvas) {
         LoginUtil.INSTANCE.e(TAG,"--draw-before-1-");
         super.draw(canvas);
-        canvas.drawCircle(getWidth()/2,getHeight()/2,50,mPaint);
+        canvas.drawCircle(getWidth()/2,getHeight()/2,80,mPaint);
         LoginUtil.INSTANCE.e(TAG,"--draw-after-2-");
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        LoginUtil.INSTANCE.e(TAG,"--onDraw-before-1-");
-        super.onDraw(canvas);
         mPaint.setColor(Color.parseColor("#1245f0"));
-        canvas.drawCircle(getWidth()/2,getHeight()/2,30,mPaint);
+        LoginUtil.INSTANCE.e(TAG,"--onDraw-before-1-");
+        canvas.drawCircle(getWidth()/2,getHeight()/2,100,mPaint);
+        super.onDraw(canvas);
         LoginUtil.INSTANCE.e(TAG,"--onDraw-after-2-");
     }
 

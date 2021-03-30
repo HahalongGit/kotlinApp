@@ -1,5 +1,6 @@
 package com.digua.kotlinapp.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.digua.kotlinapp.main.bean.ResultBean
 import com.digua.kotlinapp.main.fragment.MainFragment
 import com.digua.kotlinapp.main.presenter.MainPresenter
 import com.digua.kotlinapp.main.presenter.contract.MainContract
+import com.digua.kotlinapp.other.ViewGroupDrawSequenceActivity
 import com.digua.kotlinapp.utils.LoginUtil
 
 class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
@@ -27,38 +29,38 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LoginUtil.e(TAG,"onCreate")
+        LoginUtil.e(TAG, "onCreate")
     }
 
     override fun onStart() {
         super.onStart()
-        LoginUtil.e(TAG,"onStart")
+        LoginUtil.e(TAG, "onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        LoginUtil.e(TAG,"onResume")
+        LoginUtil.e(TAG, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        LoginUtil.e(TAG,"onPause")
+        LoginUtil.e(TAG, "onPause")
     }
 
     override fun onRestart() {
         super.onRestart()
-        LoginUtil.e(TAG,"onRestart")
+        LoginUtil.e(TAG, "onRestart")
     }
 
     override fun onStop() {
         super.onStop()
-        LoginUtil.e(TAG,"onStop")
+        LoginUtil.e(TAG, "onStop")
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
-        LoginUtil.e(TAG,"onDestroy")
+        LoginUtil.e(TAG, "onDestroy")
     }
 
     override fun getLayoutView(): View {
@@ -68,17 +70,9 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
 
     override fun initView() {
         mBinding.btnTestSuspend.setOnClickListener(this)
-        mBinding.btnOperation.setOnClickListener(this)
+        mBinding.btnDrawSequence.setOnClickListener(this)
         mBinding.tvContextText.text = "这是Main页面"
 
-        mBinding.btnOperation.setOnClickListener {
-            when (it.id) {
-                R.id.btnTestSuspend -> {
-                    Toast.makeText(this, "点击了..测试suspend关键字", Toast.LENGTH_SHORT).show()
-                }
-            }
-            //简化的写法
-        }
 
         addFragment()
 
@@ -119,16 +113,16 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnTestSuspend -> {
-                Toast.makeText(this, "测试testSuspend", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "点击了..测试suspend关键字", Toast.LENGTH_SHORT).show()
                 mPresenter?.testSuspend()
+            }
+            R.id.btnDrawSequence -> {
+                val intent = Intent(this, ViewGroupDrawSequenceActivity::class.java)
+                startActivity(intent)
             }
             R.id.btnOperation -> {// btnTestSuspend点击后主线程被占用，这里出现无响应ANR
                 Toast.makeText(this, "正在测试testSuspend了", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        if (v?.id == R.id.btnTestSuspend) {
-
         }
     }
 }

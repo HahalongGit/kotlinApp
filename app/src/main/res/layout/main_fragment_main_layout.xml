@@ -20,6 +20,8 @@
 
     <com.digua.kotlinapp.view.CustomeLayout
         android:layout_width="match_parent"
+        android:background="#BDF7EA"
+        android:visibility="gone"
         android:layout_height="100dp">
         <TextView
             android:text="一个TextView"
