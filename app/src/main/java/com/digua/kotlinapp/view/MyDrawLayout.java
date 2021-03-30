@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -35,6 +34,46 @@ import com.digua.kotlinapp.utils.LoginUtil;
  * <p>
  * 由此可知：draw 方法的在super.draw之前的代码最先执行，然后是onDraw方法执行（super.onDraw前后的代码顺序执行）
  * 接着是dispatchDraw方法中dispatchDraw前后的代码顺序执行，最后，draw的super.draw之后的代码才执行。
+ *
+ *
+ * 2.在dispatchDraw中实现QQ消息的气泡拖拽效果
+ * 思路：
+ * 1.在屏幕上设置一个初始位置，绘制一个圆
+ * 2.手指在屏幕上按下时绘制一个圆，跟随手指移动
+ * 3.根据QQ气泡的效果，观察到两个圆之间的连接是贝塞尔曲线，根据贝塞尔曲线的绘制我们知道要找到一个控制点，
+ * 使用PS的钢笔工具模拟气泡的拖拽效果（钢笔工具的绘制的效果就是贝塞尔曲线效果），发现控制点就是两个圆圆心的连线的中点。
+ * 4.分析QQ气泡的拖拽效果图发现，连接点在两个圆的四个切点上，因此需要知道四个切点的位置，并根据位置计算出圆心连线的中点（控制点）
+ * 5.得到圆的四个切点和中线的控制点后，创建一个Path，调用
+ *         mPath.moveTo(mStartPoint.x, mStartPoint.y);
+ *         mPath.lineTo(x1, y1);
+ *         mPath.quadTo(anchorX, anchorY, x2, y2);
+ *         mPath.lineTo(x3, y3);
+ *         mPath.quadTo(anchorX, anchorY, x4, y4);
+ *         mPath.lineTo(x1, y1);
+ *         设置Path
+ * 6.dispatchDraw中绘制圆 同时根据按下的状态绘制 Path贝塞尔曲线
+ * 7.根据业务addView 一个TextView作为初始的消息气泡，当手指拖动时在TextView位置绘制一个圆，让TextView的气泡跟随手指移动
+ *   获取一个View的左上角的坐标的方法：
+ *   int location[] = new int[2];// 获取坐标并放进数组中
+ *   mTextView.getLocationOnScreen(location);//获取TextView的左上角的位置
+ *   根据数组计算出手指移动的时候TextView的中心在当前点
+ * 8.根据滑动的距离设置大于指定距离时脱离初始点，并且在这个范围外手指释放后添加爆炸效果
+ * 9.爆炸效果：添加爆炸状态图片，设置一个帧动画，在手指释放的时候执行动画
+ *
+ * 10.手指滑动的分析：
+ *    由于手机上的坐标系右边为正，下边为正，因此做此类分析的时候以正方向为主，方便分析。
+ *    由于三角函数的关系，在坐标系中当X轴为负值，或者Y轴为负值的时候得到函数关系：
+ *    sin(-a) = - sina;
+ *    cos(-a) = cosa;
+ *    sin(π/2-α) = cosα
+ *    cos(π/2-α) = sinα
+ *    当角度的值是负值的时候
+ *    x = x0 + r * sin（-a）;
+ *    y = y0 - r * cosa;
+ *    因此，也就变成了下面的公式了：
+ *    x = x0 - r * sina;
+ *    y = y0 - r * cosa;
+ *   所以对于上面在坐标系正向的分析也就满足其他坐标的计算
  *
  * @author RunningDigua
  * @date 2021/3/29
@@ -103,6 +142,7 @@ public class MyDrawLayout extends FrameLayout {
 
     @Override
     public void draw(Canvas canvas) {
+        //ViewGroup中draw和onDraw只有在设置了background的时候才执行绘制
         LoginUtil.INSTANCE.e(TAG, "draw-before-1-");
         mPaint.setColor(Color.parseColor("#00ff00"));
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, 240, mPaint);
