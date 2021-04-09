@@ -1,7 +1,7 @@
 if(isRunAlone.toBoolean()){
     apply plugin: 'com.android.application'
 }else {
-    apply plugin: 'com.android.licrary'
+    apply plugin: 'com.android.library'
 }
 
 android {
@@ -9,7 +9,9 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.digua.wallet"
+        if(isRunAlone.toBoolean()){
+            applicationId "com.digua.wallet"
+        }
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
@@ -22,6 +24,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets{
+        main(){
+            if(isRunAlone.toBoolean()){
+                manifest.srcFile('src/main/manifest/AndroidManifest.xml')
+            }else {
+                manifest.srcFile('src/main/AndroidManifest.xml')
+            }
         }
     }
 

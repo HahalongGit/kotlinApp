@@ -1,8 +1,7 @@
-
-if(isRunAlone.toBoolean()){
+if (isRunAlone.toBoolean()) {
     apply plugin: 'com.android.application'
-}else {
-    apply plugin: 'com.android.licrary'
+} else {
+    apply plugin: 'com.android.library'
 }
 
 android {
@@ -10,7 +9,9 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.digua.base"
+        if (isRunAlone.toBoolean()) {//独立运行添加applicationId
+            applicationId "com.digua.base"
+        }
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
@@ -23,6 +24,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            if (isRunAlone.toBoolean()) {//根据是否独立运行设置不同的AndroidManifest，独立运行需要启动页
+                //独立运行的AndroidManifest
+                manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
         }
     }
 
