@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.digua.kotlinapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,7 +10,9 @@
     <uses-permission android:name="com.lll.beizertest.permission.PART_ONE_ACCESS"/>
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
+        tools:replace="android:name"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"

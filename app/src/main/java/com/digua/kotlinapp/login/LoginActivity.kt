@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.digua.kotlinapp.main.MainActivity
 import com.digua.kotlinapp.base.BaseActivity
 import com.digua.kotlinapp.basemvp.BaseMvpActivity
-import com.digua.kotlinapp.databinding.ActivityLoginBinding
+import com.digua.kotlinapp.databinding.AppActivityLoginBinding
 import com.digua.kotlinapp.login.bean.LoginParam
 import com.digua.kotlinapp.login.bean.LoginResult
 import com.digua.kotlinapp.login.presenter.LoginPresenter
@@ -32,15 +32,15 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.LoginView
         private const val TAG: String = "LoginActivity"
     }
 
-    private lateinit var mBinding: ActivityLoginBinding;
+    private lateinit var mBinding: AppActivityLoginBinding;
     //lateInit 延迟初始化的时机,这样不用再初始化时赋值null，
     // 未初始化之前访问会抛出异常UninitializedPropertyAccessException
 
     private lateinit var mSharedPreferences: SharePreferencesTools
 
     override fun getLayoutView(): View {
-        mBinding = ActivityLoginBinding.inflate(layoutInflater)
-        return mBinding?.root
+        mBinding = AppActivityLoginBinding.inflate(layoutInflater)
+        return mBinding.root
     }
 
     override fun initView() {
@@ -57,7 +57,7 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.LoginView
     }
 
     private fun login() {
-        mBinding.btnLogin?.setOnClickListener {
+        mBinding.btnLogin.setOnClickListener {
             var loginParam = LoginParam()
             loginParam.password = "12331"
             mPresenter?.login(loginParam)

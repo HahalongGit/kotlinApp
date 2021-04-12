@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.alibaba.android.arouter.launcher.ARouter
+import com.digua.kotlinapp.R
+import com.digua.kotlinapp.TestActivity
 import com.digua.kotlinapp.base.BaseMvpFragment
-import com.digua.kotlinapp.databinding.MainFragmentMainLayoutBinding
+import com.digua.kotlinapp.databinding.AppMainFragmentMainLayoutBinding
 import com.digua.kotlinapp.main.bean.GoodsInfo
 import com.digua.kotlinapp.main.fragment.contract.MainFragmentContract
 import com.digua.kotlinapp.utils.LoginUtil
@@ -21,9 +24,11 @@ import pub.devrel.easypermissions.EasyPermissions
  * @date 2021/3/26
  */
 class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
-    MainFragmentContract.MainFragmentView, EasyPermissions.PermissionCallbacks {
+    MainFragmentContract.MainFragmentView,
+    EasyPermissions.PermissionCallbacks,
+    View.OnClickListener{
 
-    private lateinit var mBinding: MainFragmentMainLayoutBinding
+    private lateinit var mBinding: AppMainFragmentMainLayoutBinding
 
     private val PERMISSION_CODE = 10001
 
@@ -88,31 +93,16 @@ class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
     }
 
     override fun getLayoutView(inflater: LayoutInflater): View {
-        mBinding = MainFragmentMainLayoutBinding.inflate(inflater)
+        mBinding = AppMainFragmentMainLayoutBinding.inflate(inflater)
         return mBinding.root
     }
 
 
     override fun initView() {
-        mBinding.btnTestActivty.setOnClickListener {
-//            val intent = Intent(mContext, TestActivity::class.java)
-//            startActivity(intent)
-
-            //自定义权限测试
-            val PERMISSION_STORAGE_MSG = "请授予权限，否则影响部分使用功能"
-            val perms = "com.lll.beizertest.permission.PART_ONE_ACCESS"
-            if (EasyPermissions.hasPermissions(mContext, perms)) {
-                navigateToPartOne()
-            } else {
-                EasyPermissions.requestPermissions(
-                    this,
-                    PERMISSION_STORAGE_MSG,
-                    PERMISSION_CODE,
-                    perms
-                )
-            }
-
-        }
+        mBinding.btnTestActivty.setOnClickListener(this)
+        mBinding.btnModuleLogin.setOnClickListener(this)
+        mBinding.btnModuleShare.setOnClickListener(this)
+        mBinding.btnModuleWallet.setOnClickListener(this)
     }
 
     /**
@@ -161,6 +151,47 @@ class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
 
         // 未授权
         Toast.makeText(mContext, "onPermissionsDenied 未授权", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.btn_testActivty->{
+//            val intent = Intent(mContext, TestActivity::class.java)
+//            startActivity(intent)
+
+                //自定义权限测试
+                val PERMISSION_STORAGE_MSG = "请授予权限，否则影响部分使用功能"
+                val perms = "com.lll.beizertest.permission.PART_ONE_ACCESS"
+                if (EasyPermissions.hasPermissions(mContext, perms)) {
+                    navigateToPartOne()
+                } else {
+                    EasyPermissions.requestPermissions(
+                        this,
+                        PERMISSION_STORAGE_MSG,
+                        PERMISSION_CODE,
+                        perms
+                    )
+                }
+
+            }
+            R.id.btn_moduleLogin->{
+                ARouter.getInstance()
+                    .build("/account/login")
+                    .navigation()
+            }
+            R.id.btn_moduleShare->{
+                ARouter.getInstance()
+                    .build("/share/main")
+                    .withString("","进入分享")
+                    .navigation()
+            }
+            R.id.btn_moduleWallet->{
+                ARouter.getInstance()
+                    .build("/wallet/main")
+                    .navigation()
+            }
+
+        }
     }
 
 

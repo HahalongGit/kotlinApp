@@ -4,15 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.GlideUrl;
 import com.digua.kotlinapp.utils.LoginUtil;
-
-import java.net.URL;
 
 /**
  * 测试页面
@@ -24,7 +18,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.app_activity_test);
         LoginUtil.INSTANCE.e(TAG, "onCreate");
         Glide.with(this).load("").into(new ImageView(this));
 

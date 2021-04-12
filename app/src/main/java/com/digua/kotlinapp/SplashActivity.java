@@ -4,20 +4,20 @@ import android.content.Intent;
 import android.view.View;
 
 import com.digua.kotlinapp.base.BaseActivity;
-import com.digua.kotlinapp.databinding.ActivitySplashBinding;
+import com.digua.kotlinapp.databinding.AppActivitySplashBinding;
 import com.digua.kotlinapp.login.LoginActivity;
 
 import org.jetbrains.annotations.NotNull;
 
 public class SplashActivity extends BaseActivity {
 
-    private ActivitySplashBinding mBinding;
+    private AppActivitySplashBinding mBinding;
 
 
     @NotNull
     @Override
     protected View getLayoutView() {
-        mBinding = ActivitySplashBinding.inflate(getLayoutInflater());
+        mBinding = AppActivitySplashBinding.inflate(getLayoutInflater());
         return mBinding.getRoot();
     }
 

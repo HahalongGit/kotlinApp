@@ -1,17 +1,6 @@
 package com.digua.login.ui.login;
 
-import android.app.Activity;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -23,11 +12,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.digua.login.MainActivity;
-import com.digua.login.R;
-import com.digua.login.ui.login.LoginViewModel;
-import com.digua.login.ui.login.LoginViewModelFactory;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.digua.login.R;
+import com.digua.login.bean.UserInfo;
+import com.digua.login.utils.AccountUtils;
+
+/**
+ * Route 使用 Route注解添加 ARouter路由
+ */
+@Route(path = "/account/login")
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
@@ -72,11 +72,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    UserInfo userInfo = new UserInfo();
+                    userInfo.setAccountId("axse12xeewe3433v3232");
+                    userInfo.setUserId("324adx32mxe43de98s3323");
+                    userInfo.setUserName("奔跑的地瓜");
+                    AccountUtils.userInfo = userInfo;// 保存登录信息
+                    //登录成功跳转到主模块的 MainActivity
+                    ARouter.getInstance()
+                            .build("/main/mainActivity")
+                            .navigation();
                 }
-                setResult(Activity.RESULT_OK);
-                //Complete and destroy login activity once successful
                 finish();
             }
         });

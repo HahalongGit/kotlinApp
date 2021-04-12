@@ -12,8 +12,15 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+            }
+        }
+
     }
 
     buildTypes {
@@ -67,4 +74,13 @@ dependencies {
     // google Eastpermission
     implementation 'pub.devrel:easypermissions:2.0.1'
 
+    // 阿里路由库 运行时编译工具
+    annotationProcessor 'com.alibaba:arouter-compiler:1.5.1' //由于运行时编译会在各个module中生成文件，这个依赖各个模块都需要添加
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+    implementation project(path: ':base')
+    implementation project(path: ':share')
+    implementation project(path: ':login')
+    implementation project(path: ':wallet')
 }

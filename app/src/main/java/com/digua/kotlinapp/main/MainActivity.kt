@@ -4,9 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.digua.kotlinapp.R
 import com.digua.kotlinapp.basemvp.BaseMvpActivity
-import com.digua.kotlinapp.databinding.ActivityMainBinding
+import com.digua.kotlinapp.databinding.AppActivityMainBinding
 import com.digua.kotlinapp.getLongestString
 import com.digua.kotlinapp.main.bean.ResultBean
 import com.digua.kotlinapp.main.fragment.MainFragment
@@ -15,10 +16,11 @@ import com.digua.kotlinapp.main.presenter.contract.MainContract
 import com.digua.kotlinapp.other.ViewGroupDrawSequenceActivity
 import com.digua.kotlinapp.utils.LoginUtil
 
+@Route(path = "/main/mainActivity")
 class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
     View.OnClickListener {//传递一个MainPresenter 在Base中反射创建对象，同时传递一个页面view给Presenter
 
-    private lateinit var mBinding: ActivityMainBinding
+    private lateinit var mBinding: AppActivityMainBinding
 
     private val mFragmentManager = supportFragmentManager
 
@@ -64,7 +66,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
     }
 
     override fun getLayoutView(): View {
-        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        mBinding = AppActivityMainBinding.inflate(layoutInflater)
         return mBinding.root
     }
 

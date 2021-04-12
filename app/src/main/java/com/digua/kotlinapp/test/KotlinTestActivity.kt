@@ -2,19 +2,19 @@ package com.digua.kotlinapp.test
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.digua.kotlinapp.databinding.ActivityKotlinTestBinding
+import com.digua.kotlinapp.databinding.AppActivityKotlinTestBinding
 
 class KotlinTestActivity : AppCompatActivity() {
 
 //    private var mTvNameText = TODO("not yet init");
 
-    private lateinit var binding: ActivityKotlinTestBinding
+    private lateinit var binding: AppActivityKotlinTestBinding
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityKotlinTestBinding.inflate(layoutInflater)
+        binding = AppActivityKotlinTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
     }

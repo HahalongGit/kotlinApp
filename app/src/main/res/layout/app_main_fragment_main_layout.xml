@@ -13,8 +13,26 @@
 
     <Button
         android:id="@+id/btn_testActivty"
-        android:text="启动一个Activity"
+        android:text="测试自定义权限"
         android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn_moduleLogin"
+        android:text="进入登录模块登录"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn_moduleShare"
+        android:text="进入share模块"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn_moduleWallet"
+        android:text="进如钱包模块"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
