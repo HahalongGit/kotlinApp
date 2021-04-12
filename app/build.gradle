@@ -5,7 +5,8 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
-
+    resourcePrefix "app_" //主模块的资源前缀
+    
     defaultConfig {
         applicationId "com.digua.kotlinapp"
         minSdkVersion 19
@@ -13,6 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -80,7 +82,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation project(path: ':base')
-    implementation project(path: ':share')
-    implementation project(path: ':login')
-    implementation project(path: ':wallet')
+    runtimeOnly project(path: ':share') //runtimeOnly 使我们在编写代码时能够做到不应用其他模块的类，做到代码隔离
+    runtimeOnly project(path: ':login')
+    runtimeOnly project(path: ':wallet')
 }

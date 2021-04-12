@@ -31,7 +31,8 @@ public class LoginInterceptor implements IInterceptor {
             } else {
                 //拦截器运行在ARouter线程池
                 LoginUtil.INSTANCE.e(TAG, "currentThread---" + Thread.currentThread().getName());
-                callback.onInterrupt(new RuntimeException("用户未登录，请先登录！"));
+//                callback.onInterrupt(new RuntimeException("用户未登录，请先登录！"));
+                callback.onContinue(postcard);
             }
         } else {
             callback.onContinue(postcard);

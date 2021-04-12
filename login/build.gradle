@@ -7,7 +7,7 @@ if (isRunAlone.toBoolean()) {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
-
+    resourcePrefix "login_" //login模块资源名称前缀
     defaultConfig {
         if (isRunAlone.toBoolean()) {
             applicationId "com.digua.login"
