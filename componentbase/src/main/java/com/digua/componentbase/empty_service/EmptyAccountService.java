@@ -1,5 +1,11 @@
 package com.digua.componentbase.empty_service;
 
+import android.app.Activity;
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.digua.componentbase.service.IAccountService;
 
 /**
@@ -22,6 +28,12 @@ public class EmptyAccountService implements IAccountService {
 
     @Override
     public String getUserName() {
+        return null;
+    }
+
+    @Override
+    public Fragment newFragment(Activity activity, int containerid,
+                                FragmentManager fragmentManager, Bundle bundle,String tag) {
         return null;
     }
 }

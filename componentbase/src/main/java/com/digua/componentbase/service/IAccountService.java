@@ -1,5 +1,11 @@
 package com.digua.componentbase.service;
 
+import android.app.Activity;
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 /**
  * 提供登录信息的接口
  *
@@ -22,5 +28,14 @@ public interface IAccountService {
      */
     String getUserName();
 
+    /**
+     * 添加一个Fragment
+     * @param activity
+     * @param containerid
+     * @param fragmentManager
+     * @param bundle
+     * @return
+     */
+    Fragment newFragment(Activity activity, int containerid, FragmentManager fragmentManager, Bundle bundle,String tag);
 
 }

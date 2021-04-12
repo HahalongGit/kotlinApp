@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.digua.componentbase.ServiceFactory
 import com.digua.kotlinapp.R
 import com.digua.kotlinapp.basemvp.BaseMvpActivity
 import com.digua.kotlinapp.databinding.AppActivityMainBinding
@@ -73,6 +74,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
     override fun initView() {
         mBinding.btnTestSuspend.setOnClickListener(this)
         mBinding.btnDrawSequence.setOnClickListener(this)
+        mBinding.btnReplaceFragment.setOnClickListener(this)
         mBinding.tvContextText.text = "这是Main页面"
 
 
@@ -124,6 +126,16 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
             }
             R.id.btnOperation -> {// btnTestSuspend点击后主线程被占用，这里出现无响应ANR
                 Toast.makeText(this, "正在测试testSuspend了", Toast.LENGTH_SHORT).show()
+            }
+            R.id.btn_replaceFragment -> {
+                //代码隔离的情况下，添加一个其他模块的 Fragment 到本页面
+                ServiceFactory.getInstance().accountService.newFragment(
+                    this,
+                    R.id.fl_container,
+                    mFragmentManager,
+                    null,
+                    null
+                )
             }
         }
     }
