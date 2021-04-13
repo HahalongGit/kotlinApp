@@ -52,8 +52,9 @@ dependencies {
     //multidex 多dex支持
     implementation 'com.android.support:multidex:1.0.3'
 
+    implementation project(path: ':base')
+
     //******主项目中 采用runtimeOnly配置依赖 使我们在编写代码时能够做到不应用其他模块的类，做到代码隔离*****//
-    runtimeOnly project(path: ':base')
     runtimeOnly project(path: ':share')
     runtimeOnly project(path: ':login')
     runtimeOnly project(path: ':wallet')
