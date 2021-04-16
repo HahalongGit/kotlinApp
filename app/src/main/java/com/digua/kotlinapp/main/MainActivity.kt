@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.digua.componentbase.ServiceFactory
 import com.digua.kotlinapp.R
@@ -77,9 +78,14 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
         mBinding.btnReplaceFragment.setOnClickListener(this)
         mBinding.tvContextText.text = "这是Main页面"
 
+    }
 
+
+    override fun onResumeFragments·() {
+        super.onResumeFragments()
+        LoginUtil.e(TAG, "onResumeFragments")
         addFragment()
-
+        //推荐在onResumeFragments 中执行Fragment的commit方法，避免出错
     }
 
     private fun addFragment() {
