@@ -27,11 +27,12 @@ public abstract class BaseMvpActivity<T extends BasePresenter> extends BaseActiv
         mPresenter.attachView(this);
     }
 
-    //这个方法在子类的Activity被调用，所以子类 getGenericSuperclass得到就是BaseMvpActivity<T extends BasePresenter>
+    //这个方法在子类的Activity被调用，
+    // 所以子类 getGenericSuperclass得到就是BaseMvpActivity<T extends BasePresenter>
     protected T initPresenter(){
         Type genericSuperclass = getClass().getGenericSuperclass();
         ParameterizedType type = (ParameterizedType) genericSuperclass;
-        Class<T> tClass = (Class<T>) type.getActualTypeArguments()[0];
+        Class<T> tClass = (Class<T>) type.getActualTypeArguments()[0];//获取泛型类的class，此处泛型参数只有一个
         try {
             return tClass.newInstance();
         } catch (IllegalAccessException e) {

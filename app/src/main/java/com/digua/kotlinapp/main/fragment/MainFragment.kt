@@ -174,15 +174,15 @@ class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
                 }
 
             }
-            R.id.btn_moduleLogin->{
+            R.id.btn_moduleLogin -> {
                 ARouter.getInstance()
                     .build("/account/login")
                     .navigation()
             }
-            R.id.btn_moduleShare->{
+            R.id.btn_moduleShare->{//ARouter 的path（/share/main）不匹配时会提示path不匹配，不会报错
                 ARouter.getInstance()
                     .build("/share/main")
-                    .withString("","进入分享")
+                    .withString("title","进入分享")
                     .navigation()
             }
             R.id.btn_moduleWallet->{
