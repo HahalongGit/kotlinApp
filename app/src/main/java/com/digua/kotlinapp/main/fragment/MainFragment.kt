@@ -26,7 +26,7 @@ import pub.devrel.easypermissions.EasyPermissions
 class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
     MainFragmentContract.MainFragmentView,
     EasyPermissions.PermissionCallbacks,
-    View.OnClickListener{
+    View.OnClickListener {
 
     private lateinit var mBinding: AppMainFragmentMainLayoutBinding
 
@@ -39,7 +39,7 @@ class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LoginUtil.e(TAG, "onCreate")
+        LoginUtil.e(TAG, "onCreate--$savedInstanceState")
     }
 
     override fun onCreateView(
@@ -103,6 +103,7 @@ class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
         mBinding.btnModuleLogin.setOnClickListener(this)
         mBinding.btnModuleShare.setOnClickListener(this)
         mBinding.btnModuleWallet.setOnClickListener(this)
+        mBinding.btnTest.setOnClickListener(this)
     }
 
     /**
@@ -110,8 +111,10 @@ class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
      */
     private fun navigateToPartOne() {
         val intent = Intent()
-        intent.setClassName("com.lll.beizertest",
-            "com.lll.beizertest.PartOneActivity");
+        intent.setClassName(
+            "com.lll.beizertest",
+            "com.lll.beizertest.PartOneActivity"
+        );
         startActivity(intent)
     }
 
@@ -154,8 +157,8 @@ class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btn_testActivty->{
+        when (v?.id) {
+            R.id.btn_testActivty -> {
 //            val intent = Intent(mContext, TestActivity::class.java)
 //            startActivity(intent)
 
@@ -179,20 +182,21 @@ class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
                     .build("/account/login")
                     .navigation()
             }
-            R.id.btn_moduleShare->{//ARouter 的path（/share/main）不匹配时会提示path不匹配，不会报错
+            R.id.btn_moduleShare -> {//ARouter 的path（/share/main）不匹配时会提示path不匹配，不会报错
                 ARouter.getInstance()
                     .build("/share/main")
-                    .withString("title","进入分享")
+                    .withString("title", "进入分享")
                     .navigation()
             }
-            R.id.btn_moduleWallet->{
+            R.id.btn_moduleWallet -> {
                 ARouter.getInstance()
                     .build("/wallet/main")
                     .navigation()
             }
-
+            R.id.btn_test -> {
+                Toast.makeText(mContext, "点击了按钮", Toast.LENGTH_SHORT).show()
+            }
         }
+
     }
-
-
 }

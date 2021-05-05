@@ -3,6 +3,9 @@ package com.digua.kotlinapp.utils
 import android.util.Log
 import com.digua.kotlinapp.BuildConfig
 
+fun <T>MutableList<T>.getOneData(){
+
+}
 /**
  * 日志输出
  *

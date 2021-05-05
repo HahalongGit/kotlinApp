@@ -39,8 +39,16 @@
     <com.digua.kotlinapp.view.CustomeLayout
         android:layout_width="match_parent"
         android:background="#BDF7EA"
-        android:visibility="gone"
-        android:layout_height="100dp">
+        android:visibility="visible"
+        android:layout_height="200dp">
+
+        <Button
+            android:id="@+id/btn_test"
+            android:text="测试点击"
+            android:layout_width="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="30dp"/>
+
         <TextView
             android:text="一个TextView"
             android:layout_width="wrap_content"

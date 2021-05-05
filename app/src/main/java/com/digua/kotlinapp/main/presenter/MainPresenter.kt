@@ -2,9 +2,11 @@ package com.digua.kotlinapp.main.presenter
 
 import com.digua.kotlinapp.base.BasePresenter
 import com.digua.kotlinapp.base.BaseResponse
+import com.digua.kotlinapp.getSize
 import com.digua.kotlinapp.main.api.MainApi
 import com.digua.kotlinapp.main.bean.ResultBean
 import com.digua.kotlinapp.main.presenter.contract.MainContract
+import com.digua.kotlinapp.utils.getOneData
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -120,6 +122,11 @@ class MainPresenter : BasePresenter<MainContract.MainView>(),MainContract.MainPr
                 println(TAG+"queryDataWithKotlin-success--code:"+result.code)
                 println(TAG+"queryDataWithKotlin-success-data:"+Gson().toJson(result.data))
                 result.data?.let { mView?.setResult(it) } //这里设置的时候线程没有切换回来还是 DefaultDispatcher-worker-1
+
+                //创建一个mutableListOf对象，调用在项目的任意位置定义的扩展函数
+                val  list = mutableListOf<String>()
+                list.getSize()
+                list.getOneData()
             }catch (e:Exception){
                 println(TAG+"queryDataWithKotlin-error:"+e.toString())
             }

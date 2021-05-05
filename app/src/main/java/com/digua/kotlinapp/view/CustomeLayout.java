@@ -5,7 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.digua.kotlinapp.utils.LoginUtil;
 
@@ -15,7 +17,7 @@ import com.digua.kotlinapp.utils.LoginUtil;
  * @author RunningDigua
  * @date 2021/3/29
  */
-public class CustomeLayout extends ViewGroup {
+public class CustomeLayout extends FrameLayout {
 
     private Paint mPaint;
 
@@ -58,5 +60,23 @@ public class CustomeLayout extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         LoginUtil.INSTANCE.e(TAG,"--onLayout--");
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        LoginUtil.INSTANCE.e(TAG,"--onInterceptTouchEvent");
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        LoginUtil.INSTANCE.e(TAG,"--dispatchTouchEvent");
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        LoginUtil.INSTANCE.e(TAG,"--onTouchEvent");
+        return super.onTouchEvent(event);
     }
 }

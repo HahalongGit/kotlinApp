@@ -2,9 +2,10 @@ package com.digua.kotlinapp.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.view.View
 import android.widget.Toast
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.digua.componentbase.ServiceFactory
 import com.digua.kotlinapp.R
@@ -26,6 +27,18 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
 
     private val mFragmentManager = supportFragmentManager
 
+    /**
+     * Activty销毁的时候保存数据的数据
+     */
+    private var mSavedInstanceState: Bundle? = null;
+
+    private val handler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            LoginUtil.e(TAG,"")
+        }
+    }
+
     companion object {
         const val TAG: String = "MainActivity.java--"
     }
@@ -33,7 +46,9 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LoginUtil.e(TAG, "onCreate")
+        mSavedInstanceState = savedInstanceState
+        LoginUtil.e(TAG, "onCreate--$savedInstanceState")
+        handler.sendEmptyMessage(1)
     }
 
     override fun onStart() {
@@ -80,19 +95,22 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.MainView,
 
     }
 
-
-    override fun onResumeFragments·() {
+    override fun onResumeFragments() {
         super.onResumeFragments()
         LoginUtil.e(TAG, "onResumeFragments")
         addFragment()
         //推荐在onResumeFragments 中执行Fragment的commit方法，避免出错
     }
 
+
     private fun addFragment() {
-        val beginTransaction = mFragmentManager.beginTransaction()
-        val mainFragment = MainFragment()
-        beginTransaction.add(R.id.fl_container, mainFragment)
-            .commit()
+        if (mSavedInstanceState == null) {
+            val beginTransaction = mFragmentManager.beginTransaction()
+            val mainFragment = MainFragment()
+            beginTransaction.add(R.id.fl_container, mainFragment)
+                .addToBackStack("main-stack")
+                .commit()
+        }
     }
 
     override fun initData() {

@@ -1,7 +1,11 @@
 package com.digua.kotlinapp;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.digua.kotlinapp.base.BaseActivity;
 import com.digua.kotlinapp.databinding.AppActivitySplashBinding;
@@ -13,6 +17,7 @@ public class SplashActivity extends BaseActivity {
 
     private AppActivitySplashBinding mBinding;
 
+    private Handler handler = new Handler();
 
     @NotNull
     @Override
