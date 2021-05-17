@@ -1,12 +1,19 @@
 package com.digua.kotlinapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.digua.kotlinapp.utils.LoginUtil;
+
+import org.jetbrains.annotations.NotNull;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * 测试页面

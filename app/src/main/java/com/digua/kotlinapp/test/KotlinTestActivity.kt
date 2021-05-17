@@ -3,6 +3,12 @@ package com.digua.kotlinapp.test
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.digua.kotlinapp.databinding.AppActivityKotlinTestBinding
+import com.google.gson.annotations.SerializedName
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subscribers.SerializedSubscriber
 
 class KotlinTestActivity : AppCompatActivity() {
 
@@ -10,13 +16,21 @@ class KotlinTestActivity : AppCompatActivity() {
 
     private lateinit var binding: AppActivityKotlinTestBinding
 
-
+    var observable = object : Observable<String>() {
+        override fun subscribeActual(observer: Observer<in String>) {}
+    }
+    var observer = object : Observer<String> {
+        override fun onSubscribe(d: Disposable) {}
+        override fun onNext(o: String) {}
+        override fun onError(e: Throwable) {}
+        override fun onComplete() {}
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AppActivityKotlinTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        observable.subscribe(observer)
     }
 
     //内部类

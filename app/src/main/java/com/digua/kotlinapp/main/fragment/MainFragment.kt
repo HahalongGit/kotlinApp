@@ -32,7 +32,7 @@ class MainFragment : BaseMvpFragment<MianFragmentPresenter>(),
 
     private val PERMISSION_CODE = 10001
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         LoginUtil.e(TAG, "onAttach");
     }
