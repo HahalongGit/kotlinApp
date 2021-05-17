@@ -27,6 +27,10 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 //    sourceSets {
 //        main {
 //            if (isRunAlone.toBoolean()) {//根据是否独立运行设置不同的AndroidManifest，独立运行需要启动页
@@ -76,6 +80,15 @@ dependencies {
     api 'com.squareup.retrofit2:adapter-rxjava2:2.6.0'
     api 'io.reactivex.rxjava2:rxjava:2.1.2'
     api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    // lifecycle 依赖
+    def lifecycle_version = "2.3.1"
+    // ViewModel
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // LiveData
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    api "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    api "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
     //gson
     api 'com.google.code.gson:gson:2.2.4'
